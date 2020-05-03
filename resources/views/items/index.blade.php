@@ -2,7 +2,7 @@
 @section('content')
 <center><h1>Found Items</h1></center>
 <br>
-<!--Checks if there is any items in the database -->
+<!--ensure to check if there is any items in the database -->
 @if(count($items)>0)
 <table class="table">
         <thead>
