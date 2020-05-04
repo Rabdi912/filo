@@ -16,14 +16,14 @@
 							<th>Reason</th>
 							<th>Requestee Name</th>
 							<th>Requestee Email</th>
-							<th>Decision </th>
+							<th>Status </th>
 							<th>Actions</th>
 						</tr>
 						<!-- For loop of all requested item. -->
 						@foreach($items as $item)
 						<tr>
 							<td>{{$itemsRequested[$item['id']]['category']}}</td>
-							<td> <a href="{{action('ItemsController@show', $item['item_id'])}}" class="btn btn-primary">Details</a> </td>
+							<td> <a href="{{action('ItemsController@show', $item['item_id'])}}" class="btn btn-primary">View</a> </td>
 							<td >{{$item['reason']}}</td>
 							<td>{{$usersRequested[$item['id']]['name']}}</td>
 							<td>{{$usersRequested[$item['id']]['email']}}</td>
@@ -33,15 +33,15 @@
 							@elseif ($item['accept'] == -1)
 							<td>Declined</td>
 							@else
-							<td>No Decision Made</td>
+							<td>Pending</td>
 							@endif
 							<!--form to allow admin to make a decision -->
 							@if($item['accept'] == 0)
 							<td>
 
 								<form method="post" action=" {{ route('requestsTable', ['id'=>$item['id']] ) }}">
-									<button type="submit" value=declined >Declined</button>
-									<button type="submit" value=access name=accept >accept</button>
+									<button class="btn btn-success"type="submit" value=approved name=accept >Accept</button>
+									<button class="btn btn-danger" type="submit" value=declined >Decline</button>
 									@csrf
 								</form>
 							</td>

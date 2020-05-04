@@ -29,8 +29,6 @@
                <!-- error messages for each screen -->
             @include('inc.messages')
             <main class="py-4">
-                <br>
-                <a href="{{ URL::previous() }}"> <button type="button" class="btn btn-outline-primary">Go Back</button></a>
                    <!-- views for each screen  -->
                 @yield('content')
             </main>

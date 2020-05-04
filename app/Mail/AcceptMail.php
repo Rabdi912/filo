@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class AcceptMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $item_id;
+    
 
     /**
      * Create a new message instance.
@@ -20,7 +20,7 @@ class AcceptMail extends Mailable
     public function __construct()
     {
         //
-        $this->item_id=$item_id;
+        
 
     }
 
@@ -31,6 +31,6 @@ class AcceptMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.accept')->with($this->item_id);
+        return $this->markdown('emails.accept');
     }
 }

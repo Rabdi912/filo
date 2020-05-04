@@ -16,17 +16,12 @@ class DecisionMail extends Mailable
      *
      * @return void
      */
-    protected $requestitem ;
-    protected $user;
-    protected $request;
-
-    public function __construct($requestitem , $user, $request)
+   
+    public function __construct()
     {
         //
         
-        $this->items=$requestitem ;
-        $this->user=$user;
-        $this->request=$request;
+      
     }
 
     /**
@@ -36,13 +31,6 @@ class DecisionMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.decision')->with([
-            'Name' => $this->items->name,
-            'itemColor' => $this->items->color,
-            'itemCategory' => $this->items->category,
-            'requestSubmitted' => $this->request->reason,
-            'approved' => $this->request->approved
-
-        ]);
+        return $this->markdown('emails.decision');
     }
 }

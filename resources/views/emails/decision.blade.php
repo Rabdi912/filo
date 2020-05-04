@@ -1,11 +1,11 @@
 @component('mail::message')
-# Your request has been {{ $approved }}!
+# Your request has been declined!!
 
-Hello {{ $Name }},
+Hello,
 
-This email is to confirm that your request for a {{ $itemColor }} {{ $itemCategory }} has been {{ $approved }}. Your request was submitted at {{ $requestSubmitted }}.
+This email is to confirm that your request has been declined. 
 
-For more details please visit the FiLo System.
+Visit FiLo for more details!
 
 Thanks,<br>
 {{ config('app.name') }}

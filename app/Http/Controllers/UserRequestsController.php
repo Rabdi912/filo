@@ -120,7 +120,7 @@ class UserRequestsController extends Controller
         //
        
     }
-   
+
     /**
      * Display the specified resource.
      *
@@ -176,14 +176,15 @@ class UserRequestsController extends Controller
         }
 		$user = User::find($itemRequest['user_id'])->toArray();
 		//if request is approved or refused then send an email.
-		if($value == 'access') {
+		if($value == 'approved') {
             $itemRequest->accept = 1;
-            Mail::to($user['email'])->send(new DecisionMail( $itemRequest ,$user, $request));
+            Mail::to($user['email'])->send(new AcceptMail());
 			$itemRequest->save();
         }
         else {
             $itemRequest->accept= -1;
-            Mail::to($user['email'])->send(new DecisionMail($itemRequest , $user, $request));
+            $value == 'declined';
+            Mail::to($user['email'])->send(new DecisionMail());
 			$itemRequest->save();
 			
 		}

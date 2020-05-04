@@ -12,10 +12,10 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                       <!-- allow users to add an item-->
+                    <!-- allow users to add an item-->
                     @if(Auth::user()->role ==0)
                     <a href="/items/create" class="btn btn-primary">Add Item</a>
-                       <!-- allow admin to access Requests table-->
+                    <!-- allow admin to access Requests table-->
                     @else()
                     <a href="/requests" class="btn btn-primary">view Request </a>
 
@@ -66,28 +66,28 @@
                 </div>
             </div>
         </div>
-           <!-- view that allows the user to see their details-->
-        @if (Auth::check())
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">User Details</div>
-                <div class="card-body">
-                    @if($user= Auth::user())
-                    <b>Name: </b> {{$user['name'] }} <br />
-                    <b>Email Address: </b> {{$user['email'] }}<br />
-                    <b>Role: </b>
-                    @if($role = $user->role==1)
-                    Admin
-                    @else
-                    User
-                    @endif
-                    <br />
-                    <b>Joined: </b>{{$user['created_at']}} <br />
-                </div>
+        @if (Auth::user()->role==0)
+    <div class="col-md-4 float-right" >
+        <div class="card">
+            <div class="card-header">User Details</div>
+            <div class="card-body">
+                @if($user= Auth::user())
+                <b>Name: </b> {{$user['name'] }} <br />
+                <b>Email Address: </b> {{$user['email'] }}<br />
+                <b>Role: </b>
+                @if($role = $user->role==1)
+                Admin
+                @else
+                User
+                @endif
+                <br />
+                <b>Joined: </b>{{$user['created_at']}} <br />
             </div>
-            <br>
-            @endif
-            @endif
         </div>
+        <br>
+        @endif
+        @endif
     </div>
+    </div>
+</div>
     @endsection
