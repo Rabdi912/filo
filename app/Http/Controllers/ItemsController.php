@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Item;
 use DB;
+use File;
 
 class ItemsController extends Controller
 {    /**
@@ -55,35 +57,54 @@ class ItemsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {    
+        //messages if the image does not meet the requirments 
+        $messages = [    
+			'cover_image.max' => 'you have reached the maximium image uplaod.upload 3 images only!!.',
+			'cover_image.*.mimes' => 'Invalid file formats.check the format.jpeg,png,jpg,gif,svg!',
+			'cover_image.*.max' => 'Image size must be 1mb at max',
+		];
         //valdidation rules
-       $this->validate($request,[
+       $validator = Validator::make($request->all(), [
         'category'=>'required',
         'color'=>'required',
         'date_found'=>'required',
         'location'=>'required',
         'description'=>'required',
-        'cover_image'=>'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1999',
-    
-       ]);
-      
-        
+        'cover_image*'=>'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1999',
+        'cover_image'=>'sometimes|max:3 images'
+        ], $messages);
+        //check if the validation fails then show errors 
+        if ($validator->fails()) {
+            return redirect('/items/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        //handle file uplaod
+        $cover_images_to_store=array('');
         //handle file upload 
-        if ($request->hasFile('cover_image')){
+        if($request->hasFile('cover_image')){
+            foreach($request->file('cover_image') as $image){
             //Gets the filename with the extension
-            $fileNameWithExt = $request->file('cover_image')->getClientOriginalName();
-            //just gets the filename
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            //Just gets the extension
-            $extension = $request->file('cover_image')->getClientOriginalExtension();
-            //Gets the filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            //Uploads the image
-            $path =$request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
-            }
+            $fileNameWithExt = $image->getClientOriginalName();
+            //replaces spaces in file name with an underscore
+            $fileNameWithExt = preg_replace('/\s+/','_', $fileNameWithExt);
+             //just gets the filename
+             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+             //Just gets the extension
+             $extension = $image->getClientOriginalExtension();
+             //Gets the filename to store
+             $fileNameToStore = $filename.'_'.time().'.'.$extension ;
+             //Uploads the image
+             $path =$image->storeAs('public/cover_images', $fileNameToStore);
+             array_push($cover_images_to_store, $fileNameToStore );
+        }
+         }
             else {
-            $fileNameToStore = 'noimage.jpg';
+            $input_image="";
             }
+            $input_image=implode(" ",$cover_images_to_store);
+            $input_image=ltrim($input_image);   
          
       //create item
       $item = new Item;
@@ -93,7 +114,7 @@ class ItemsController extends Controller
       $item->location=$request->input('location');
       $item->description=$request->input('description');
       $item->user_id= auth()->user()->id;
-      $item ->cover_image=$fileNameToStore;
+      $item->cover_image=$input_image;
      $item->save();
      return redirect('/items')->with('success', 'Item Created');
     }
@@ -139,40 +160,66 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //validation rules
-        $this->validate($request,[
-            'category'=>'required',
-            'color'=>'required',
-            'date_found'=>'required',
-            'location'=>'required',
-            'description'=>'required'
+        //messages if the image does not meet the requirments 
+        $messages = [    
+			'cover_image.max' => 'you have reached the maximium image uplaod.upload 3 images only!!.',
+			'cover_image.*.mimes' => 'Invalid file formats.check the format.jpeg,png,jpg,gif,svg!',
+			'cover_image.*.max' => 'Image size must be 1mb at max.',
+        ];
+        //valdidation rules
+       $validator = Validator::make($request->all(), [
+        'category'=>'required',
+        'color'=>'required',
+        'date_found'=>'required',
+        'location'=>'required',
+        'description'=>'required',
+        'cover_image*'=>'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1999',
+        'cover_image'=>'sometimes|max:3 images'
+        ], $messages);
+        //check if the validation fails then show errors 
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }   
         
-           ]);
-            //handle file upload 
-        if ($request->hasFile('cover_image')){
+          //handle file upload
+        $cover_images_to_store=array('');
+        //handle file upload 
+        if($request->hasFile('cover_image')){
+            foreach($request->file('cover_image') as $image){
             //Gets the filename with the extension
-            $fileNameWithExt = $request->file('cover_image')->getClientOriginalName();
-            //just gets the filename
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            //Just gets the extension
-            $extension = $request->file('cover_image')->getClientOriginalExtension();
-            //Gets the filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            //Uploads the image
-            $path =$request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+            $fileNameWithExt = $image->getClientOriginalName();
+            //replaces spaces in file name with an underscore
+            $fileNameWithExt = preg_replace('/\s+/','_', $fileNameWithExt);
+             //just gets the filename
+             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+             //Just gets the extension
+             $extension = $image->getClientOriginalExtension();
+             //Gets the filename to store
+             $fileNameToStore = $filename.'_'.time().'.'.$extension ;
+             //Uploads the image
+             $path =$image->storeAs('public/cover_images', $fileNameToStore);
+             array_push($cover_images_to_store, $fileNameToStore );
             }
+         }
+            else {
+            $input_image="";
+            }
+            $input_image=implode(" ",$cover_images_to_store);
+            $input_image=ltrim($input_image);   
 
-          //create item
+
+          //create item and save the object
           $item = Item::find($id);
           $item->category=$request->input('category');
           $item->color=$request->input('color');
           $item->date_found=$request->input('date_found');
           $item->location=$request->input('location');
           $item->description=$request->input('description');
-          if ($request->hasFile('cover_image')){
-              $item->cover_image =  $fileNameToStore;
-            }
+          $item->cover_image=$input_image;
           $item->save();
+          //redirect HTTP response with success message
          return redirect('/items')->with('success', 'Item Updated');
         
     }
@@ -185,7 +232,6 @@ class ItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
         DB::table('user_requests')->where('item_id', $id)->delete();
         $item=Item::find($id);
         //check for correct user
@@ -198,5 +244,6 @@ class ItemsController extends Controller
         }
         $item->delete();
         return redirect('/items')->with('success', 'Item Removed');
+    
     }
 }

@@ -9,13 +9,45 @@
 <br>
 <center><h1>Found Item</h1></center>
 <br>
-<img style="width:100%" src="/storage/cover_images/{{$item['cover_image']}}">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<!-- carousel for mutilple images-->
+<?php 
+$image=$item['cover_image'];
+$image =ltrim($image);
+if($image == ""){ ?>
+<!-- if users do not upload image then upload auto image-->
+<img style= "width:100%"src="../storage/cover_images/noimage.jpg">
+<?php } 
+// show mutiple images or an image in a carousel
+else{
+    $new = explode(" ",$image);?>
+    @foreach ($new as $n)
+    <div data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></div>
+    @endforeach
+    <div class="carousel-inner" role="listbox">
+        @foreach( $new as $n )
+        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+         <center><img class="d-block img-fluid"  src="{{asset('../storage/cover_images/'.$n)}}"></center>
+        </div>
+        @endforeach
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><?php }?>
+<br>
 <div class="card">
     <center>
         <div class="card-header">Display Description </div>
     </center>
     <div class="card-body">
         <table class="table table-hover">
+            <!-- Display associated data for specified item -->
             <tr>
                 <th> id</th>
                 <td> {{$item->id}} </td>
@@ -45,7 +77,7 @@
 </div>
 
 </table>
-<small>Written on {{$item->created_at}} by {{$item->user->name}}</small>
+<small>Added on {{$item->created_at}} by {{$item->user->name}}</small>
 <!--Checks if user is admin; only allows admin to delete and edit items -->
 @if(!Auth::guest())
 @if(Auth::user()->role==1)
@@ -55,7 +87,6 @@
 {{Form::hidden('_method','DELETE')}}
 {{Form::submit('Delete',['class'=> 'btn btn-danger'])}}
 {!!Form::close()!!}
-@else
 @endif
 @endif
 @endsection

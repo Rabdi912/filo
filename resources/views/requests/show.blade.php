@@ -39,7 +39,7 @@
 							@if($item['accept'] == 0)
 							<td>
 
-								<form method="post" action=" {{ route('requestsTable', ['id'=>$item['id']] ) }}">
+								<form method="post" action=" {{ route('requestsitems', ['id'=>$item['id']] ) }}">
 									<button class="btn btn-success"type="submit" value=approved name=accept >Accept</button>
 									<button class="btn btn-danger" type="submit" value=declined >Decline</button>
 									@csrf

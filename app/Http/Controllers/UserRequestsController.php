@@ -50,7 +50,7 @@ class UserRequestsController extends Controller
 		}
 		if($usersRequested == null) {
 		    //If no requests uploaded then cant access the page.
-			return redirect('/home')->with('error','no requests yet');
+			return redirect('/home')->with('error','No requests made!!');
 		}
 		else {
             //show all request in the table and dont allow more than 5 per page.

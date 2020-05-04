@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<p></p>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -61,15 +62,16 @@
                     <p>You have no posts</P>
                     @endif
                     @else
-                    <h5>you are logged in!</h5>
+                    <h5>You are logged in!</h5>
                     @endif
                 </div>
             </div>
         </div>
-        @if (Auth::user()->role==0)
+    <!-- allow users to access their user details in the dashboard-->     
+        @if (Auth::user())
     <div class="col-md-4 float-right" >
         <div class="card">
-            <div class="card-header">User Details</div>
+           <div class="card-header">Profile</div>
             <div class="card-body">
                 @if($user= Auth::user())
                 <b>Name: </b> {{$user['name'] }} <br />

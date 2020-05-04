@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('content')
-<h1>Create Item</h1>
+<center><h1>Create Item</h1></center>
 <br>
 <form method="post" action="{{ route('items.store') }}" enctype="multipart/form-data">
     <div class="card">
-        <div class="form-group-row">
+        <div class="form-group-row col-md-4">
             <!-- CSRF Token -->
             @csrf
             <!-- category is a dropdown element -->
+            <br>
             <label>Category</label>
             <select name="category">
                 <option value="phones">Phones</option>
@@ -30,13 +31,18 @@
             <label>Location</label>
             <input type="text" name="location" placeholder="Location" />
         </div>
+        <div class="col-md-4">
         <!-- Text Input for the description of the item used ck-editor for style. -->
         <label>Description</label>
+        </div>
+        <div class="col-md-12">
         <textarea name="description" cols="30" rows="10" id="article-ckeditor"></textarea>
+        </div>
         <!-- File input for the image of the item. -->
-        <div class="form-group">
+        <br>
+        <div class="form-group col-md-4">
             <label>Image</label>
-            <input type="file" name="cover_image" placeholder="Image File" />
+            <input type="file" name="cover_image[]" multiple="true" placeholder="Image File" />
         </div>
     </div>
     <!-- Buttons to submit or reset the form -->

@@ -23,8 +23,8 @@ Route::resource('items','ItemsController');
 Route::resource('requests','UserRequestsController');
 Route::get('/requests/{id}', 'UserRequestsController@show')->name('requests');
 Route::post('/requests/{id}', 'UserRequestsController@create')->name('requests');
-Route::get('/requestsTable', 'UserRequestsController@index')->name('requestsTable');
-Route::post('/requestsTable', 'UserRequestsController@update')->name('requestsTable');
+Route::get('/requestsitems', 'UserRequestsController@index')->name('requestsitems');
+Route::post('/requestsitems', 'UserRequestsController@update')->name('requestsitems');
 
 
 Auth::routes();

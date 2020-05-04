@@ -1,14 +1,44 @@
 @extends('layouts.app')
 @section('content')
-<!--allow users to go back to items page  -->
-<a href="/items/{{$item['id']}}" class="btn btn-primary">Go Back</a>
 <br>
 <br>
 <!-- this is a view the user will see when requesting an item-->
 <center><h1>Found Item</h1></center>
 <br>
-<img style="width:100%" src="/storage/cover_images/{{$item['cover_image']}}">
+<!-- carousel for mutilple images-->
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+	<?php 
+	$image=$item['cover_image'];
+	$image =ltrim($image);
+	//if users do not upload image then upload auto image
+	if($image == ""){ ?>
+	<img style= "width:100%"src="../storage/cover_images/noimage.jpg">
+	<?php } 
+	// show mutiple images or an image in a carousel
+	else{
+		$new = explode(" ",$image);?>
+		@foreach ($new as $n)
+		<div data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></div>
+		@endforeach
+		<div class="carousel-inner" role="listbox">
+			@foreach( $new as $n )
+			<div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+			 <center><img class="d-block img-fluid"  src="{{asset('../storage/cover_images/'.$n)}}"></center>
+			</div>
+			@endforeach
+		  </div>
+		  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		  </a>
+		  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		  </a>
+		</div><?php }?>
+		<br>
 <div class="card">
+	<!-- view the information of item that is requested, so users can access the item they requestsed -->
 	<center>
 		<div class="card-header">Request Item </div>
 	</center>

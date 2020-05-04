@@ -16,7 +16,7 @@
                 </tr>
         </thead>
         <tbody>
-                <!--for loop to read the data in the database -->
+                <!--for loop to iterate through the data in the database -->
                 @foreach($items as $item)
                 <tr>
                         <td> {{$item['id']}} </td>
@@ -35,6 +35,6 @@
 <!-- Pagination link -->
 {{$items->links()}}
 @else
-<p> no lost Items Found</p>
+<h3> No lost Items Found</h3>
 @endif
 @endsection
