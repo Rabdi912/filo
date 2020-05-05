@@ -82,11 +82,9 @@ else{
 @if(!Auth::guest())
 @if(Auth::user()->role==1)
 <hr>
-<a href="/items/{{$item->id}}/edit" class="btn btn-primary">Edit</a>
-{!!Form::open(['action'=>['ItemsController@destroy',$item->id], 'method'=>'POST', 'class' =>'float-right'])!!}
-{{Form::hidden('_method','DELETE')}}
-{{Form::submit('Delete',['class'=> 'btn btn-danger'])}}
-{!!Form::close()!!}
+<a href="{{ route('edit', $item['id'])}}" class="btn btn-primary">Edit</a>
+<a type="button" class="btn btn-danger float-right"
+href="{{ route('destroy',  $item['id']) }}">Delete</a>
 @endif
 @endif
 @endsection

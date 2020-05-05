@@ -12,10 +12,10 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Home </a>
+                    <a class="nav-link" href="{{ route('home') }}">Home </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/items">Found Items</a>
+                    <a class="nav-link" href="{{ route('items') }}">Found Items</a>
                 </li>
             </ul>
 
@@ -37,9 +37,9 @@
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/home">Dashboard</a>
+                        <a class="dropdown-item" href="{{ route('home') }}">Dashboard</a>
                         @if(Auth::user()->role == 1)
-                        <a class="dropdown-item" href="/requests">Requests</a>
+                        <a class="dropdown-item" href="{{ route('requestsitems') }}">Requests</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

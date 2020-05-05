@@ -25,7 +25,7 @@
                         <td> {{$item['color']}} </td>
                         <!--Checks to see if the users has loged in to access the button -->
                         @if(!Auth::guest())
-                        <td> <a href="/items/{{$item['id']}}"><button type="button" class="btn btn-primary">View More
+                        <td> <a href="{{ route('shows', $item['id'])}}"><button type="button" class="btn btn-primary">View More
                                         </button></a> </td>
                         @endif
                 </tr>

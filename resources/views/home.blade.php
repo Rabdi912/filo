@@ -15,10 +15,10 @@
                     @endif
                     <!-- allow users to add an item-->
                     @if(Auth::user()->role ==0)
-                    <a href="/items/create" class="btn btn-primary">Add Item</a>
+                    <a href="{{ route('create')}}" class="btn btn-primary">Add Item</a>
                     <!-- allow admin to access Requests table-->
                     @else()
-                    <a href="/requests" class="btn btn-primary">view Request </a>
+                    <a href="{{ route('requestsitems') }}" class="btn btn-primary">view Request </a>
 
                     @endif
                     <br>

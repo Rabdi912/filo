@@ -76,7 +76,7 @@ class ItemsController extends Controller
         ], $messages);
         //check if the validation fails then show errors 
         if ($validator->fails()) {
-            return redirect('/items/create')
+            return redirect('create')
                         ->withErrors($validator)
                         ->withInput();
         }
@@ -116,7 +116,7 @@ class ItemsController extends Controller
       $item->user_id= auth()->user()->id;
       $item->cover_image=$input_image;
      $item->save();
-     return redirect('/items')->with('success', 'Item Created');
+     return redirect('items')->with('success', 'Item Created');
     }
 
     /**
@@ -220,7 +220,7 @@ class ItemsController extends Controller
           $item->cover_image=$input_image;
           $item->save();
           //redirect HTTP response with success message
-         return redirect('/items')->with('success', 'Item Updated');
+         return redirect('items')->with('success', 'Item Updated');
         
     }
 

@@ -2,7 +2,9 @@
 @section('content')
 <center><h1>Edit Item</h1></center>
 <br>
-<form method="post" action="{{ action('ItemsController@update', $item['id']) }}" enctype="multipart/form-data">
+<form  method="POST"
+action="{{ action('ItemsController@update',$item['id']) }} "
+enctype="multipart/form-data">
      <!-- CSRF Token -->
     @csrf
       <!-- Shows original category selected and options in dropdown version -->
@@ -44,7 +46,6 @@
             <input type="file" name="cover_image[]"  multiple="true" placeholder="Image file" />
         </div>
         <br>
-        <input type="hidden" name="_method" value="PUT">
         <!-- Buttons to submit or reset the form -->
         <div class="col-md-6 col-md-offset-4">
             <input type="submit" class="btn btn-primary" />

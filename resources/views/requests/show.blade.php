@@ -47,12 +47,15 @@
 							</td>
 							<!-- if request has been made allow admin to remove the request from the table  -->
 							@else
-							<td><form action="{{action('UserRequestsController@destroy', $item['id'])}}" method="post" enctype="multipart/form-data">
-									@csrf
-									<input name="_method" type="hidden" value="DELETE" />
-									<button type="submit" class="btn btn-danger">Delete</a>
-									</form>
-							</td>
+							
+									
+									<td>
+										<!-- Option to delete request -->
+										<a type="button" class="btn btn-outline-danger"
+											href="{{ route('destroyrequest',  $item['id']) }}">Delete</a>
+									</td>
+	
+						
 							@endif
 							<td></td>
 						</tr>

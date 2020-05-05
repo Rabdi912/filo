@@ -2,7 +2,7 @@
 @section('content')
 <center><h1>Create Item</h1></center>
 <br>
-<form method="post" action="{{ route('items.store') }}" enctype="multipart/form-data">
+<form method="POST" action="{{url('create') }}" enctype="multipart/form-data">
     <div class="card">
         <div class="form-group-row col-md-4">
             <!-- CSRF Token -->
