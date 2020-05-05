@@ -2,7 +2,7 @@
 @section('content')
 <!--ensures that the admin cannot request an item -->
 @if(!Auth::user()->role==1)
-<a href="/requests/{{$item->id}}" class="btn btn-primary float-right">Request</a>
+<a href="{{ route('requests', $item['id']) }}" class="btn btn-primary float-right">Request</a>
 @endif
 <!--the view the user will see when viewing item details -->
 <br>
