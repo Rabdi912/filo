@@ -12,7 +12,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('home') }}">Home </a>
+                    <a class="nav-link" href="{{ route('index') }}">Home </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('items') }}">Found Items</a>
